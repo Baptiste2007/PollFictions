@@ -3,7 +3,8 @@ const app = express();
 const port = 3005; // Le port sur lequel votre serveur écoutera
 const mysql = require('mysql2');
 
-
+app.use(express.static('Public'));
+app.use(express.json());
 // Pour ce connectés à la base :
 const connection = mysql.createConnection({
   host: '172.29.18.113',
