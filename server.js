@@ -80,7 +80,7 @@ app.post('/vote', (req, res) => {
 
   connection.query(
     'INSERT INTO vote (Note, Avis, IdUser, IdOeuvres, Date) VALUES (?, ?, ?, ?, NOW())',
-    [req.body.IdUser, req.body.IdOeuvres],
+    [req.body.insertValue1,req.body.insertValue2,req.body.IdUser, req.body.IdOeuvres],
     (err, results) => {
       if (err) {
         console.error('Erreur lors de l\'insertion du vote dans la base de données :', err);
@@ -93,6 +93,18 @@ app.post('/vote', (req, res) => {
   );
 });
 
+
+// Pour récupérer les oeuvres :
+app.get('/Oeuvres', (req, res) => {
+  connection.query('SELECT * FROM Oeuvres', (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la récupération des Oeuvres :', err);
+      res.status(500).json({ message: 'Erreur serveur' });
+      return;
+    }
+    res.json(results);
+  });
+});
 
 
 
