@@ -4,13 +4,23 @@ const port = 3005; // Le port sur lequel votre serveur écoutera
 const mysql = require('mysql2');
 
 
-// Pour ce connectés à la base :
+//Pour ce connectés à la base :
 const connection = mysql.createConnection({
   host: '172.29.18.113',
   user: 'Poll Fictions',
   password: 'Poll Fictions',
   database: 'Poll Fictions'
 });
+
+
+// pour ce connectés a la maison (Baptiste)
+//const connection = mysql.createConnection({
+  //host: '192.168.1.45',
+  //user: 'Poll Fictions',
+  //password: 'Poll Fictions',
+  //database: 'Poll Fictions'
+//});
+
 
 connection.connect((err) => {
   if (err) {
