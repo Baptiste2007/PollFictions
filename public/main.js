@@ -23,3 +23,18 @@ connection.addEventListener('click', () => {
                 document.getElementById('reponse').innerHTML = responsejson.cle2;
             });
 });
+
+const button_sign_up = document.getElementById('button_sign_up');
+button_sign_up.addEventListener('click', () => {
+    const Password = document.getElementById('Password');
+    fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ inputValue: login.value, inputValue2: Password.value })
+    }).then(response => response.text())
+        .then(data => {
+            alert(data);
+        });
+});

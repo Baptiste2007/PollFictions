@@ -61,7 +61,9 @@ app.post('/connexion', (req, res) => {
     });
 });
 
-
+app.get('/info', (req, res) => {
+  res.json({ cle1: 'toujour pas Connecter', cle2: 'Connecter' });
+});
 
 // récupérer les Users 
 app.get('/Users', (req, res) => {
