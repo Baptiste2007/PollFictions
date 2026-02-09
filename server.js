@@ -4,13 +4,21 @@ const port = 3005; // Le port sur lequel votre serveur écoutera
 const mysql = require('mysql2');
 
 
-//Pour ce connectés à la base :
+// Pour ce connectés à la base :
 const connection = mysql.createConnection({
   host: '172.29.18.113',
   user: 'Poll Fictions',
   password: 'Poll Fictions',
   database: 'Poll Fictions'
 });
+
+  //MORELLE Geoffrey :
+/*const connection = mysql.createConnection({
+  host: '172.29.18.115',
+  user: 'accessNodeServerDemo',
+  password: 'accessNodeServerDemo',
+  database: 'Poll Fictions'
+});*/
 
 
 // pour ce connectés a la maison (Baptiste)
@@ -20,8 +28,6 @@ const connection = mysql.createConnection({
   //password: 'Poll Fictions',
   //database: 'Poll Fictions'
 //});
-
-
 connection.connect((err) => {
   if (err) {
     console.error('Erreur de connexion à la base de données :', err);
@@ -129,5 +135,6 @@ app.get('/Oeuvres', (req, res) => {
 
 // Démarrer le serveur
 app.listen(port, () => {
-  console.log(`Le serveur est en écoute sur le port ${port}`);
+  let Ip = require("ip").address();
+  console.log(`Le serveur est en http://${Ip}:${port}`);
 })
