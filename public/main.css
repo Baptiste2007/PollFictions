@@ -2,6 +2,9 @@
     display: flex;
     justify-content: center;
 }
+.margin{
+    margin-left: 1%;
+}
 
 .center_con {
     margin-top: 1%;
