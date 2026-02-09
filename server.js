@@ -20,7 +20,6 @@ const connection = mysql.createConnection({
   database: 'Poll Fictions'
 });*/
 
-
 // pour ce connectés a la maison (Baptiste)
 //const connection = mysql.createConnection({
   //host: '192.168.1.45',

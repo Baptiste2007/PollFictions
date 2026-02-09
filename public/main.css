@@ -1,0 +1,10 @@
+.center_zone{
+    display: flex;
+    justify-content: center;
+}
+
+.center_con {
+    margin-top: 1%;
+    display: flex;
+    justify-content: center;
+}

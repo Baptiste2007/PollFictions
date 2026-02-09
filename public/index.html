@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
     <title>Document</title>
 </head>
+
 <body>
-    <h1>PollFictions</h1>
+    <!--Bootstrap Connection-->
+    <header class="p-3 text-bg-dark">
 
-    <!--Connection-->
-    <input type="text" id="login" placeholder="Id">
-    <input type="text" id="Password" placeholder="Mot de passse">
-    <input type="button" value="Créer un compte" class="bouton" id="button_sign_up">
-    <input type="button" value="Connection" class="bouton" id="button_connection">
-    <div id="reponse"><p>Pas connecter</p></div>
+        <h1>PollFictions</h1>
+        <div class="center_zone">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <input type="text" id="login" placeholder="Id">
+                <input type="text" id="Password" placeholder="Mot de passse">
 
+                <input type="button" value="Créer un compte" class="btn btn-warning" type="button" id="button_sign_up">
+                <input type="button" value="Connection" class="btn btn-outline-light me-2" id="button_connection">
+            </div>
+        </div>
+
+        <div class="center_con">
+            <div id="reponse">
+                <p>Pas connecter</p>
+            </div>
+        </div>
+
+    </header>
 </body>
-    <script src="main.js"></script>
+<script src="main.js"></script>
+
 </html>
