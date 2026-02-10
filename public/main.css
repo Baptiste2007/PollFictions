@@ -1,13 +1,23 @@
 .center_zone{
     display: flex;
     justify-content: center;
+    margin-bottom: 3%;
 }
 .margin{
     margin-left: 1%;
 }
 
 .center_con {
-    margin-top: 1%;
     display: flex;
-    justify-content: center;
+    justify-content: center;    
+}
+
+#écart{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 3%;
+}
+
+#contenu{
+    background-color: #002E5E;
 }
