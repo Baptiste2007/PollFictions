@@ -18,6 +18,107 @@
     margin-right: 3%;
 }
 
+.container{
+    margin-top: 3%;
+}
+
 #contenu{
-    background-color: #002E5E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(2, 8, 91);
+    background: radial-gradient(circle, rgb(6,14,124), rgba(0,0,0,1) 100%);
+}
+
+.carroucel{
+    width: 100%;
+    overflow-x: auto;
+    margin: 3em auto;
+    display: flex;
+    gap: 1em;    
+    scroll-behavior: smooth;
+    anchor-name: --carroucel;
+    scroll-snap-type: x mandatory;
+    scroll-marker-group: after;
+}
+
+.carroucel::scroll-marker-group{
+    display: flex;
+    justify-content: center;
+    gap: .5em;
+}
+
+.card::scroll-marker{
+    content: '';
+    height: 1em;
+    width: 1em;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+.card::scroll-marker:target-current{
+    background-color: var(--brand-color);
+}
+
+.carroucel::-webkit-scrollbar{
+    display: none;
+}
+
+.carroucel::scroll-button(right){
+    content: '>';
+    border: none;
+    background-color: var(--brand-color);
+    font-family: Consolas;
+    font-size: 3rem;
+    color: white;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    padding-bottom: .1em;
+    cursor: pointer;
+    position: fixed;
+    position-anchor: --carroucel;
+    position-area: right center;
+    translate: 50%;
+}
+
+.carroucel::scroll-button(left){
+    content: '<';
+    border: none;
+    background-color: var(--brand-color);
+    font-family: Consolas;
+    font-size: 3rem;
+    color: white;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    padding-bottom: .1em;
+    cursor: pointer;
+    position: fixed;
+    position-anchor: --carroucel;
+    position-area: left center;
+    translate: -50%;
+}
+
+.carroucel::scroll-button(right):disabled, .carroucel::scroll-button(left):defined{
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.card{
+    scroll-snap-align: start;
+    aspect-ratio: 5/3;
+    border-radius: .5em;
+    text-align: center;
+    margin-left: -90%;
+}
+
+.col{
+    margin-left: 165px;
+}
+
+@media(max-width: 500px){
+    .card{
+        flex: 0 0 100%;
+    }
 }
