@@ -1,3 +1,4 @@
+
 .center_zone{
     display: flex;
     justify-content: center;
@@ -20,6 +21,19 @@
 
 .container{
     margin-top: 3%;
+}
+
+.p_image_car{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #55595c;
+    width: 100%;
+    height: 100%;
+}
+
+.image_car{
+   max-height: 25ch;
 }
 
 #contenu{
@@ -107,10 +121,10 @@
 
 .card{
     scroll-snap-align: start;
-    aspect-ratio: 5/3;
     border-radius: .5em;
     text-align: center;
     margin-left: -90%;
+    height: 100%;
 }
 
 .col{
