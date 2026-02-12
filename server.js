@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
   database: 'Poll Fictions'
 });
 
-  //MORELLE Geoffrey :
+//MORELLE Geoffrey :
 /*const connection = mysql.createConnection({
   host: '172.29.18.115',
   user: 'accessNodeServerDemo',
@@ -22,10 +22,10 @@ const connection = mysql.createConnection({
 
 // pour ce connectés a la maison (Baptiste)
 //const connection = mysql.createConnection({
-  //host: '192.168.1.45',
-  //user: 'Poll Fictions',
-  //password: 'Poll Fictions',
-  //database: 'Poll Fictions'
+//host: '192.168.1.45',
+//user: 'Poll Fictions',
+//password: 'Poll Fictions',
+//database: 'Poll Fictions'
 //});
 connection.connect((err) => {
   if (err) {
@@ -40,24 +40,24 @@ app.use(express.json());
 
 
 // Permet de se connectés 
-app.post('/connexion', (req, res) => {  
+app.post('/connexion', (req, res) => {
   console.log(req.body);
   //on récupère le login et le password
   const { login, password } = req.body;
   connection.query('SELECT * FROM Users WHERE login = ? AND password = ?', [login, password], (err, results) => {
-      if (err) {
-        console.error('Erreur lors de la vérification des identifiants :', err);
-        res.status(500).json({ message: 'Erreur serveur' });
-        return;
-      }
-      if (results.length === 0) {
-        res.status(401).json({ message: 'Identifiants invalides' });
-        return;
-      }
-      // Identifiants valides 
-      //renvoi les informations du user
-      res.json({ message: 'Connexion réussie !', user: results[0] });
-    });
+    if (err) {
+      console.error('Erreur lors de la vérification des identifiants :', err);
+      res.status(500).json({ message: 'Erreur serveur' });
+      return;
+    }
+    if (results.length === 0) {
+      res.status(401).json({ message: 'Identifiants invalides' });
+      return;
+    }
+    // Identifiants valides 
+    //renvoi les informations du user
+    res.json({ message: 'Connexion réussie !', user: results[0] });
+  });
 });
 
 app.get('/info', (req, res) => {
@@ -101,7 +101,7 @@ app.post('/vote', (req, res) => {
 
   connection.query(
     'INSERT INTO vote (Note, Avis, IdUser, IdOeuvres, Date) VALUES (?, ?, ?, ?, NOW())',
-    [req.body.insertValue1,req.body.insertValue2,req.body.IdUser, req.body.IdOeuvres],
+    [req.body.insertValue1, req.body.insertValue2, req.body.IdUser, req.body.IdOeuvres],
     (err, results) => {
       if (err) {
         console.error('Erreur lors de l\'insertion du vote dans la base de données :', err);
@@ -127,7 +127,21 @@ app.get('/Oeuvres', (req, res) => {
   });
 });
 
-
+app.get('/Oeuvres/:Titre', (req, res) => {
+  const titre = req.params.titre;
+  connection.query('SELECT * FROM Oeuvres WHERE Titre = ?', [titre], (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la récupération de l\'Oeuvre :', err);
+      res.status(500).json({ message: 'Erreur serveur' });
+      return;
+    }
+    if (results.length === 0) {
+      res.status(404).json({ message: 'Oeuvre non trouvée' });
+      return;
+    }
+    res.json(results[0]);
+  });
+});
 
 
 // Route d'exemple
