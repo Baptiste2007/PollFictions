@@ -143,6 +143,21 @@ app.get('/Oeuvres/:Titre', (req, res) => {
   });
 });
 
+app.get('/Oeuvres/:Description', (req, res) => {
+  const description = req.params.description;
+connection.query('SELECT * FROM Oeuvres WHERE Description = ?', [description], (err, results) => {
+  if (err) { 
+    console.error('Erreur lors de la récupération de l\'Oeuvre :', err); 
+    res.status(500).json({ message: 'Erreur serveur' }); 
+    return; 
+  } 
+  if (results.length === 0) { 
+    res.status(404).json({ message: 'Oeuvre non trouvée' }); 
+    return; 
+  } 
+  res.json(results[0]); 
+}); 
+});
 
 // Route d'exemple
 
