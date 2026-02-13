@@ -40,6 +40,7 @@ button_sign_up.addEventListener('click', () => {
 });
 
 const contenue_oeuvre = document.getElementById("contenue_oeuvre");
+let v = 0;
 contenue_oeuvre.addEventListener('click', () => {
 
     fetch('/Oeuvres', {
@@ -48,13 +49,40 @@ contenue_oeuvre.addEventListener('click', () => {
             'Content-Type': 'application/json'
         },
     })
-    .then(response => response.json())   // <-- JSON obligatoire
-    .then(data => {
-        const div = document.getElementById("gen_contenue_oeuvre");
-        const h2 = document.createElement("h2");
+        .then(response => response.json())
+        .then(data => {
+            const div = document.getElementById("gen_contenue_oeuvre");
 
-        h2.textContent = data[0].Titre;  // <-- Premier titre du tableau
-        div.appendChild(h2);
-    })
-    .catch(err => console.error(err));
+            //Titre
+            const h2 = document.createElement("h2");
+            h2.textContent = data[0].Titre;
+
+            //Type
+            const type = document.createElement("p");
+            type.textContent = data[0].Type;
+
+            //Durée
+            const Durée = document.createElement("p");
+            Durée.textContent = data[0].Durée;
+
+            //Description
+            const Description = document.createElement("p");
+            Description.textContent = data[0].Description;
+
+            //Affichage
+            if (v != 1) {
+                div.appendChild(h2);
+                div.appendChild(type);
+                div.appendChild(Durée);
+                div.appendChild(Description);
+                v++;
+            } else {
+                div.removeChild(div.firstChild);
+                div.removeChild(div.firstChild);
+                div.removeChild(div.firstChild);
+                div.removeChild(div.firstChild);
+                v--;
+            }
+            
+        })
 });
