@@ -48,6 +48,7 @@ contenue_oeuvre.addEventListener('click', () => {
     let idUser = document.getElementById("usersList").value;
 
     //créer p
+    
     const newDiv = document.createElement("p");
     //le contenue de p
     const newContent = document.createTextNode("L'id Utilisateur " +
