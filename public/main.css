@@ -1,34 +1,34 @@
-.center_zone{
+.center_zone {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 3%;
 }
 
-.margin{
+.margin {
     margin-left: 1%;
 }
 
 .center_con {
     display: flex;
-    justify-content: center;    
+    justify-content: center;
 }
 
-#écart{
+#écart {
     display: flex;
     justify-content: space-between;
     margin-right: 3%;
 }
 
-.container{
+.container {
     margin-top: 3%;
 }
 
-.card-text{
+.card-text {
     text-align: justify;
 }
 
-.p_image_car{
+.p_image_car {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,37 +40,36 @@
     border-radius: 7px;
 }
 
-.image_car{
-   max-height: 30ch;
+.image_car {
+    max-height: 30ch;
 }
 
-#contenu{
+#contenu {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(2, 8, 91);
-    background: radial-gradient(circle, rgb(6,14,124), rgba(0,0,0,1) 100%);
+    background: radial-gradient(circle, rgb(6, 14, 124), rgba(0, 0, 0, 1) 100%);
 }
 
-.carroucel{
+.carroucel {
     width: 100%;
     overflow-x: auto;
     margin: 3em auto;
     display: flex;
-    gap: 1em;    
+    gap: 1em;
     scroll-behavior: smooth;
     anchor-name: --carroucel;
     scroll-snap-type: x mandatory;
     scroll-marker-group: after;
 }
 
-.carroucel::scroll-marker-group{
+.carroucel::scroll-marker-group {
     display: flex;
     justify-content: center;
     gap: .5em;
 }
 
-.card::scroll-marker{
+.card::scroll-marker {
     content: '';
     height: 1em;
     width: 1em;
@@ -78,15 +77,15 @@
     border-radius: 50%;
 }
 
-.card::scroll-marker:target-current{
+.card::scroll-marker:target-current {
     background-color: var(--brand-color);
 }
 
-.carroucel::-webkit-scrollbar{
+.carroucel::-webkit-scrollbar {
     display: none;
 }
 
-.carroucel::scroll-button(right){
+.carroucel::scroll-button(right) {
     content: '>';
     border: none;
     background-color: var(--brand-color);
@@ -104,7 +103,7 @@
     translate: 50%;
 }
 
-.carroucel::scroll-button(left){
+.carroucel::scroll-button(left) {
     content: '<';
     border: none;
     background-color: var(--brand-color);
@@ -122,12 +121,13 @@
     translate: -50%;
 }
 
-.carroucel::scroll-button(right):disabled, .carroucel::scroll-button(left):defined{
+.carroucel::scroll-button(right):disabled,
+.carroucel::scroll-button(left):defined {
     opacity: 0.5;
     cursor: auto;
 }
 
-.card{
+.card {
     scroll-snap-align: start;
     border-radius: .5em;
     text-align: center;
@@ -135,12 +135,51 @@
     height: 100%;
 }
 
-.col{
+.col {
     margin-left: 165px;
 }
 
-@media(max-width: 500px){
-    .card{
+@media(max-width: 500px) {
+    .card {
         flex: 0 0 100%;
     }
+}
+
+#gen_contenue_oeuvre {
+    background: linear-gradient(135deg, #ffcc33, #ff9933);
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-width: 75%;
+    margin: 10px auto;
+    text-align: justify;
+}
+
+/* Titre */
+#gen_contenue_oeuvre titre {
+    color: whitesmoke;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    
+}
+
+/* Type et durée */
+#gen_contenue_oeuvre infos {
+    display: flex;
+    gap: 20px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Description */
+#gen_contenue_oeuvre description {
+    display: flex;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: white; 
 }

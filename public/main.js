@@ -54,19 +54,19 @@ contenue_oeuvre.addEventListener('click', () => {
             const div = document.getElementById("gen_contenue_oeuvre");
 
             //Titre
-            const h2 = document.createElement("h2");
+            const h2 = document.createElement("titre");
             h2.textContent = data[0].Titre;
 
             //Type
-            const type = document.createElement("p");
+            const type = document.createElement("infos");
             type.textContent = data[0].Type;
 
             //Durée
-            const Durée = document.createElement("p");
+            const Durée = document.createElement("infos");
             Durée.textContent = data[0].Durée;
 
             //Description
-            const Description = document.createElement("p");
+            const Description = document.createElement("description");
             Description.textContent = data[0].Description;
 
             //Affichage
