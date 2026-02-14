@@ -12,11 +12,19 @@ const connection = mysql.createConnection({
   database: 'Poll Fictions'
 });
 
-//MORELLE Geoffrey :
+//MORELLE Geoffrey (La Providence):
 /*const connection = mysql.createConnection({
   host: '172.29.18.115',
   user: 'accessNodeServerDemo',
   password: 'accessNodeServerDemo',
+  database: 'Poll Fictions'
+});*/
+
+//MORELLE Geoffrey (Maison):
+/*const connection = mysql.createConnection({
+  host: '172.29.18.113',
+  user: 'Poll Fictions',
+  password: 'Poll Fictions',
   database: 'Poll Fictions'
 });*/
 
