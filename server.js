@@ -22,9 +22,9 @@ const connection = mysql.createConnection({
 
 //MORELLE Geoffrey (Maison):
 /*const connection = mysql.createConnection({
-  host: '172.29.18.113',
-  user: 'Poll Fictions',
-  password: 'Poll Fictions',
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
   database: 'Poll Fictions'
 });*/
 
