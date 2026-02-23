@@ -12,8 +12,8 @@ connection.addEventListener('click', () => {
     }).then(response => response.json())
         .then(data => {
             alert(data.message);
-            alert('ID utilisateur : ' + data.user.id);
-            localStorage.setItem("idUser", data.user.id);
+            alert('ID utilisateur : ' + data.user.Id);
+            localStorage.setItem("IdUsers", data.user.Id);
         });
 
     fetch('/info')
@@ -69,20 +69,58 @@ contenue_oeuvre.addEventListener('click', () => {
             const Description = document.createElement("description");
             Description.textContent = data[0].Description;
 
+            //boutton vote
+            const boutton_vote = document.createElement("button");
+            boutton_vote.textContent = "Clique-moi !";
+            //boutton_vote.id = "boutonDynamique";
+            //boutton_vote.className = "btn";
+            boutton_vote.addEventListener("click", () => {
+
+                let IdOeuvres = data[0].Id;
+                let IdUsers = localStorage.getItem("IdUsers");
+                let Note = "0";
+                let Avis = "0";
+
+                //const newDiv = document.createElement("p");
+                //const newContent = document.createTextNode("L'id Utilisateur " +
+                    //idElecteur + "  voter pour l'id " + idUser);
+
+                //const currentDiv = document.getElementById("div");
+
+                fetch('/Votes', {
+
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ IdUsers: IdUsers, IdOeuvres: IdOeuvres, Note: Note, Avis: Avis})
+                }).then(response => response.text())
+                    .then(data => {
+                        alert("L'id Utilisateur " + IdOeuvres + "  voter pour l'id " + IdUsers);
+                    });
+                //newDiv.appendChild(newContent);
+
+                //document.body.insertBefore(newDiv, currentDiv);
+
+
+            });
+
             //Affichage
             if (v != 1) {
                 div.appendChild(h2);
                 div.appendChild(type);
                 div.appendChild(Durée);
                 div.appendChild(Description);
+                div.appendChild(boutton_vote);
                 v++;
             } else {
                 div.removeChild(div.firstChild);
                 div.removeChild(div.firstChild);
                 div.removeChild(div.firstChild);
                 div.removeChild(div.firstChild);
+                div.removeChild(div.firstChild);
                 v--;
             }
-            
+
         })
 });
