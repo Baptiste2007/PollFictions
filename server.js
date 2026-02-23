@@ -5,12 +5,13 @@ const mysql = require('mysql2');
 
 
 // Pour ce connectés à la base :
+/*
 const connection = mysql.createConnection({
   host: '172.29.18.113',
   user: 'Poll Fictions',
   password: 'Poll Fictions',
   database: 'Poll Fictions'
-});
+});*/
 
 //MORELLE Geoffrey (La Providence):
 /*const connection = mysql.createConnection({
@@ -21,12 +22,12 @@ const connection = mysql.createConnection({
 });*/
 
 //MORELLE Geoffrey (Maison):
-/*const connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'root',
-  database: 'Poll Fictions'
-});*/
+  database: 'PollFictions'
+});
 
 // pour ce connectés a la maison (Baptiste)
 //const connection = mysql.createConnection({
@@ -105,14 +106,15 @@ app.post('/register', (req, res) => {
 })
 
 // Pour voter :
-app.post('/vote', (req, res) => {
+app.post('/Votes', (req, res) => {
+  const { Note, Avis, IdUsers, IdOeuvres } = req.body;
 
   connection.query(
-    'INSERT INTO vote (Note, Avis, IdUser, IdOeuvres, Date) VALUES (?, ?, ?, ?, NOW())',
-    [req.body.insertValue1, req.body.insertValue2, req.body.IdUser, req.body.IdOeuvres],
+    'INSERT INTO Votes (Note, Avis, IdUsers, IdOeuvres, Date) VALUES (?, ?, ?, ?, NOW())',
+    [Note, Avis, IdUsers, IdOeuvres],
     (err, results) => {
       if (err) {
-        console.error('Erreur lors de l\'insertion du vote dans la base de données :', err);
+        console.error('Erreur lors de l\'insertion du vote :', err);
         res.status(500).json({ message: 'Erreur serveur' });
         return;
       }
@@ -121,7 +123,6 @@ app.post('/vote', (req, res) => {
     }
   );
 });
-
 
 // Pour récupérer les oeuvres :
 app.get('/Oeuvres', (req, res) => {
