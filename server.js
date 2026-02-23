@@ -26,7 +26,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'root',
-  database: 'PollFictions'
+  database: 'Poll Fictions'
 });
 
 // pour ce connectés a la maison (Baptiste)
@@ -107,11 +107,10 @@ app.post('/register', (req, res) => {
 
 // Pour voter :
 app.post('/Votes', (req, res) => {
-  const { Note, Avis, IdUsers, IdOeuvres } = req.body;
-
+  
   connection.query(
     'INSERT INTO Votes (Note, Avis, IdUsers, IdOeuvres, Date) VALUES (?, ?, ?, ?, NOW())',
-    [Note, Avis, IdUsers, IdOeuvres],
+    [req.body.Note, req.body.Avis, req.body.IdUsers, req.body.IdOeuvres],
     (err, results) => {
       if (err) {
         console.error('Erreur lors de l\'insertion du vote :', err);
