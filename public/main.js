@@ -74,7 +74,7 @@ contenue_oeuvre.addEventListener('click', () => {
             Description.textContent = data[0].Description;
 
             // Avis
-            const Avis = document.createElement("input");
+            const Avis = document.createElement("textarea");
             Avis.type = "text";
             Avis.id = "Avis";
             Avis.placeholder = "Donner vos avis sur l'oeuvre.";

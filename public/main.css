@@ -147,10 +147,10 @@
 #gen_contenue_oeuvre {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(135deg, #ffcc33, #ff9933); /* fond chaud */
-    padding: 30px 35px;
+    background: linear-gradient(135deg, #ffcc33, #ff9933);
+    padding: 25px 30px;
     border-radius: 20px;
-    color: #fff8e0; /* texte ivoire doux */
+    color: white;  
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     max-width: 720px;
@@ -159,22 +159,21 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Titre */
+/* Titre → bleu nuit (complémentaire élégant) */
 .titre {
-    color: #fff5cc; /* ivoire clair pour ressortir sur le fond */
+    color: white;
     font-size: 2.2rem;
     font-weight: 800;
     margin-bottom: 15px;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.35);
 }
 
-/* Type et durée */
+/* Infos secondaires → bleu légèrement adouci */
 .infos {
     display: flex;
     gap: 25px;
     font-size: 1rem;
     margin-bottom: 18px;
-    color: #fff9e0; /* texte doux */
+    color: white;
     opacity: 0.9;
 }
 
@@ -182,39 +181,28 @@
 .description {
     font-size: 1.2rem;
     line-height: 1.7;
-    color: #fffbe0; /* très lisible */
+    color: white;
     margin-bottom: 20px;
 }
 
-/* Note / étoiles */
-.stars {
-    display: flex;
-    margin: 0 auto;
-    margin-bottom: 3%;
-    font-size: 42px;
-    cursor: pointer;
-    display: inline-block;
-    color: #f0e5c0; /* légèrement doré clair */
-}
-
-/* Étoiles individuelles */
+/* Étoiles neutres */
 .star {
     font-size: 36px;
     cursor: pointer;
     transition: transform 0.25s ease, color 0.25s ease;
     margin-right: 6px;
-    color: #e6d8a0; /* neutre sur fond chaud */
+    color: whitesmoke; /* gris bleuté */
 }
 
-/* Étoile active */
+/* Étoile active (contraste chaud conservé) */
 .star.active {
-    color: #ffd700; /* doré lumineux */
+    color: #1c2a44;
 }
 
-/* Animation hover sur chaque étoile */
+/* Hover */
 .star:hover {
     transform: scale(1.4);
-    color: #ffe066; /* doré clair au hover */
+    color: #ffb703;
 }
 
 /* Valeur de la note */
@@ -222,7 +210,7 @@
     margin-top: 12px;
     font-size: 1.25rem;
     font-weight: 500;
-    color: #fff9e0; /* texte harmonieux */
+    color: #1c2a44;
 }
 
 /* Champ Avis */
@@ -231,29 +219,32 @@
     padding: 10px 12px;
     border-radius: 10px;
     border: none;
-    font-size: 1rem;
     margin-top: 12px;
     margin-bottom: 3px;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
-    background-color: #ffffff20; /* léger transparent blanc */
-    color: #fff8e0; /* texte harmonisé avec le fond */
+
+    /* Fond légèrement bleuté transparent */
+    background-color: rgba(15, 30, 61, 0.08);
+    color: white;
     outline: none;
     transition: background 0.3s ease;
 }
 
 #Avis:focus {
-    background-color: #ffffff40;
+    background-color: rgba(15, 30, 61, 0.15);
 }
 
-/* Bouton Vote */
+/* Bouton Vote → Bleu complémentaire */
 #button_vote {
+    margin-left: 25%;
+    margin-right: 25%;
     padding: 10px 20px;
     border-radius: 12px;
     border: none;
     font-size: 1rem;
     font-weight: bold;
-    background: linear-gradient(135deg, #ff9933, #ffcc33); /* bouton assorti au fond */
-    color: #fffbe0; /* texte doux */
+    background: linear-gradient(135deg, #1c2a44, #2f3e5c);
+    color: #ffffff;
+
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
