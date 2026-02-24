@@ -78,7 +78,6 @@ contenue_oeuvre.addEventListener('click', () => {
             Avis.type = "text";
             Avis.id = "Avis";
             Avis.placeholder = "Donner vos avis sur l'oeuvre.";
-            Avis.value = data[0].Description; 
 
             // Note
             const Note = document.createElement("div");
@@ -95,25 +94,29 @@ contenue_oeuvre.addEventListener('click', () => {
 
                     let toutesLesEtoiles = Note.getElementsByClassName("star");
 
+                    // si on clique sur la même note
                     if (noteActuelle === i) {
 
+                        // on enlève tout
                         for (let j = 0; j < toutesLesEtoiles.length; j++) {
-                            toutesLesEtoiles[j].classList.remove("active");
+                            toutesLesEtoiles[j].classList.remove("active"); //nom de classe CSS
                         }
 
                         noteActuelle = 0;
 
                     } else {
 
+                        // on enlève tout d'abord
                         for (let j = 0; j < toutesLesEtoiles.length; j++) {
                             toutesLesEtoiles[j].classList.remove("active");
                         }
 
+                        // on colore jusqu'à l'étoile cliquée
                         for (let j = 0; j < i; j++) {
                             toutesLesEtoiles[j].classList.add("active");
                         }
 
-                        noteActuelle = i;
+                        noteActuelle = i; // on mémorise la nouvelle note
                     }
                 };
 

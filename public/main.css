@@ -144,63 +144,122 @@
         flex: 0 0 100%;
     }
 }
-
 #gen_contenue_oeuvre {
-    background: linear-gradient(135deg, #ffcc33, #ff9933);
-    padding: 20px;
-    border-radius: 12px;
-    color: white;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    max-width: 75%;
-    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #ffcc33, #ff9933); /* fond chaud */
+    padding: 30px 35px;
+    border-radius: 20px;
+    color: #fff8e0; /* texte ivoire doux */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    max-width: 720px;
+    margin: 25px auto;
     text-align: justify;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Titre */
 .titre {
-    color: whitesmoke;
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-
+    color: #fff5cc; /* ivoire clair pour ressortir sur le fond */
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 /* Type et durée */
 .infos {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     font-size: 1rem;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
+    color: #fff9e0; /* texte doux */
     opacity: 0.9;
-    color: rgba(255, 255, 255, 0.75);
 }
 
 /* Description */
 .description {
-    display: flex;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: white;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #fffbe0; /* très lisible */
+    margin-bottom: 20px;
 }
 
+/* Note / étoiles */
 .stars {
-    font-size: 40px;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 3%;
+    font-size: 42px;
     cursor: pointer;
-    color: #ccc;
+    display: inline-block;
+    color: #f0e5c0; /* légèrement doré clair */
 }
 
+/* Étoiles individuelles */
 .star {
-    color: grey;
-    font-size: 30px;
+    font-size: 36px;
     cursor: pointer;
+    transition: transform 0.25s ease, color 0.25s ease;
+    margin-right: 6px;
+    color: #e6d8a0; /* neutre sur fond chaud */
 }
 
+/* Étoile active */
 .star.active {
-    color: gold;
+    color: #ffd700; /* doré lumineux */
 }
 
+/* Animation hover sur chaque étoile */
+.star:hover {
+    transform: scale(1.4);
+    color: #ffe066; /* doré clair au hover */
+}
+
+/* Valeur de la note */
 .rating-value {
-    margin-top: 10px;
-    font-size: 20px;
+    margin-top: 12px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #fff9e0; /* texte harmonieux */
+}
+
+/* Champ Avis */
+#Avis {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    margin-top: 12px;
+    margin-bottom: 3px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff20; /* léger transparent blanc */
+    color: #fff8e0; /* texte harmonisé avec le fond */
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+#Avis:focus {
+    background-color: #ffffff40;
+}
+
+/* Bouton Vote */
+#button_vote {
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff9933, #ffcc33); /* bouton assorti au fond */
+    color: #fffbe0; /* texte doux */
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#button_vote:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
