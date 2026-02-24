@@ -151,23 +151,23 @@
     border-radius: 12px;
     color: white;
     font-family: Arial, sans-serif;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     max-width: 75%;
     margin: 10px auto;
     text-align: justify;
 }
 
 /* Titre */
-#gen_contenue_oeuvre titre {
+.titre {
     color: whitesmoke;
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 10px;
-    
+
 }
 
 /* Type et durée */
-#gen_contenue_oeuvre infos {
+.infos {
     display: flex;
     gap: 20px;
     font-size: 1rem;
@@ -177,9 +177,30 @@
 }
 
 /* Description */
-#gen_contenue_oeuvre description {
+.description {
     display: flex;
     font-size: 1.1rem;
     line-height: 1.5;
-    color: white; 
+    color: white;
+}
+
+.stars {
+    font-size: 40px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.star {
+    color: grey;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.star.active {
+    color: gold;
+}
+
+.rating-value {
+    margin-top: 10px;
+    font-size: 20px;
 }

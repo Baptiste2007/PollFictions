@@ -54,38 +54,84 @@ contenue_oeuvre.addEventListener('click', () => {
             const div = document.getElementById("gen_contenue_oeuvre");
 
             //Titre
-            const h2 = document.createElement("titre");
+            const h2 = document.createElement("h3");
+            h2.id = "titre";
             h2.textContent = data[0].Titre;
 
             //Type
-            const type = document.createElement("infos");
+            const type = document.createElement("p");
+            type.id = "infos";
             type.textContent = data[0].Type;
 
             //Durée
-            const Durée = document.createElement("infos");
+            const Durée = document.createElement("p");
+            Durée.id = "infos";
             Durée.textContent = data[0].Durée;
 
             //Description
-            const Description = document.createElement("description");
+            const Description = document.createElement("p");
+            Description.id = "description";
             Description.textContent = data[0].Description;
 
-            //boutton vote
+            // Avis
+            const Avis = document.createElement("input");
+            Avis.type = "text";
+            Avis.id = "Avis";
+            Avis.placeholder = "Donner vos avis sur l'oeuvre.";
+            Avis.value = data[0].Description; 
+
+            // Note
+            const Note = document.createElement("div");
+            Note.className = "stars";
+
+            let noteActuelle = 0;
+            for (let i = 1; i <= 5; i++) {
+
+                let etoile = document.createElement("span");
+                etoile.className = "star";
+                etoile.textContent = "★";
+
+                etoile.onclick = function () {
+
+                    let toutesLesEtoiles = Note.getElementsByClassName("star");
+
+                    if (noteActuelle === i) {
+
+                        for (let j = 0; j < toutesLesEtoiles.length; j++) {
+                            toutesLesEtoiles[j].classList.remove("active");
+                        }
+
+                        noteActuelle = 0;
+
+                    } else {
+
+                        for (let j = 0; j < toutesLesEtoiles.length; j++) {
+                            toutesLesEtoiles[j].classList.remove("active");
+                        }
+
+                        for (let j = 0; j < i; j++) {
+                            toutesLesEtoiles[j].classList.add("active");
+                        }
+
+                        noteActuelle = i;
+                    }
+                };
+
+                Note.appendChild(etoile);
+            }
+
+            // Bouton vote
             const boutton_vote = document.createElement("button");
-            boutton_vote.textContent = "Clique-moi !";
-            //boutton_vote.id = "boutonDynamique";
-            //boutton_vote.className = "btn";
+            boutton_vote.textContent = "Vote";
+            boutton_vote.id = "button_vote";
+
             boutton_vote.addEventListener("click", () => {
 
+                // On récupère les VALEURS
                 let IdOeuvres = data[0].Id;
                 let IdUsers = localStorage.getItem("IdUsers");
-                let Note = "0";
-                let Avis = "0";
-
-                //const newDiv = document.createElement("p");
-                //const newContent = document.createTextNode("L'id Utilisateur " +
-                    //idElecteur + "  voter pour l'id " + idUser);
-
-                //const currentDiv = document.getElementById("div");
+                let valeurNote = noteActuelle;
+                let valeurAvis = Avis.value;
 
                 fetch('/Votes', {
 
@@ -93,16 +139,18 @@ contenue_oeuvre.addEventListener('click', () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ IdUsers: IdUsers, IdOeuvres: IdOeuvres, Note: Note, Avis: Avis})
-                }).then(response => response.text())
+                    body: JSON.stringify({
+                        IdUsers: IdUsers,
+                        IdOeuvres: IdOeuvres,
+                        Note: valeurNote,
+                        Avis: valeurAvis
+                    })
+
+                })
+                    .then(response => response.text())
                     .then(data => {
-                        alert("L'id Utilisateur " + IdOeuvres + "  voter pour l'id " + IdUsers);
+                        alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
                     });
-                //newDiv.appendChild(newContent);
-
-                //document.body.insertBefore(newDiv, currentDiv);
-
-
             });
 
             //Affichage
@@ -111,9 +159,13 @@ contenue_oeuvre.addEventListener('click', () => {
                 div.appendChild(type);
                 div.appendChild(Durée);
                 div.appendChild(Description);
+                div.appendChild(Avis);
+                div.appendChild(Note);
                 div.appendChild(boutton_vote);
                 v++;
             } else {
+                div.removeChild(div.firstChild);
+                div.removeChild(div.firstChild);
                 div.removeChild(div.firstChild);
                 div.removeChild(div.firstChild);
                 div.removeChild(div.firstChild);
