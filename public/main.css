@@ -26,9 +26,10 @@
 
 .card-text {
     text-align: justify;
+    overflow: auto;
 }
 
-.p_image_car {
+.I_image_car {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,8 +41,30 @@
     border-radius: 7px;
 }
 
+.T_image_car {
+    flex: 1 1 auto;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    color: var(--bs-card-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 25%;
+}
+
+h4{
+    display: flex;
+    justify-content: center;
+}
+
+.B_image_car {
+    display: flex;
+    flex: 1 1 auto;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+}
+
 .image_car {
     max-height: 30ch;
+    margin-top: 3%;
+    margin-bottom: 3%;
 }
 
 #contenu {
@@ -130,13 +153,13 @@
 .card {
     scroll-snap-align: start;
     border-radius: .5em;
-    text-align: center;
     margin-left: -90%;
-    height: 100%;
+    max-height: 75%;
+    max-width: 180%;
 }
 
 .col {
-    margin-left: 165px;
+    margin-left: 15%;
 }
 
 @media(max-width: 500px) {
@@ -144,13 +167,14 @@
         flex: 0 0 100%;
     }
 }
+
 #gen_contenue_oeuvre {
     display: flex;
     flex-direction: column;
     background: linear-gradient(135deg, #ffcc33, #ff9933);
     padding: 25px 30px;
     border-radius: 20px;
-    color: white;  
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     max-width: 720px;
@@ -191,7 +215,8 @@
     cursor: pointer;
     transition: transform 0.25s ease, color 0.25s ease;
     margin-right: 6px;
-    color: whitesmoke; /* gris bleuté */
+    color: whitesmoke;
+    /* gris bleuté */
 }
 
 /* Étoile active (contraste chaud conservé) */
