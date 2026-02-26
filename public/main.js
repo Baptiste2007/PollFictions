@@ -39,143 +39,137 @@ button_sign_up.addEventListener('click', () => {
         });
 });
 
-const contenue_oeuvre = document.getElementById("contenue_oeuvre");
-let v = 0;
-contenue_oeuvre.addEventListener('click', () => {
+// On récupère tous les boutons avec la classe "contenue_oeuvre"
+const contenue_oeuvre = document.getElementsByClassName("contenue_oeuvre");
 
-    fetch('/Oeuvres', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            const div = document.getElementById("gen_contenue_oeuvre");
+// On boucle sur tous les boutons
+for (let i = 0; i < contenue_oeuvre.length; i++) {
+    contenue_oeuvre[i].addEventListener("click", function () {
+        const idBouton = this.id; // ID du bouton cliqué
+        console.log("Le bouton cliqué a l'ID :", idBouton);
 
-            //Titre
-            const h2 = document.createElement("h3");
-            h2.id = "titre";
-            h2.textContent = data[0].Titre;
-
-            //Type
-            const type = document.createElement("p");
-            type.id = "infos";
-            type.textContent = data[0].Type;
-
-            //Durée
-            const Durée = document.createElement("p");
-            Durée.id = "infos";
-            Durée.textContent = data[0].Durée;
-
-            //Description
-            const Description = document.createElement("p");
-            Description.id = "description";
-            Description.textContent = data[0].Description;
-
-            // Avis
-            const Avis = document.createElement("textarea");
-            Avis.type = "text";
-            Avis.id = "Avis";
-            Avis.placeholder = "Donner vos avis sur l'oeuvre.";
-
-            // Note
-            const Note = document.createElement("div");
-            Note.className = "stars";
-
-            let noteActuelle = 0;
-            for (let i = 1; i <= 5; i++) {
-
-                let etoile = document.createElement("span");
-                etoile.className = "star";
-                etoile.textContent = "★";
-
-                etoile.onclick = function () {
-
-                    let toutesLesEtoiles = Note.getElementsByClassName("star");
-
-                    // si on clique sur la même note
-                    if (noteActuelle === i) {
-
-                        // on enlève tout
-                        for (let j = 0; j < toutesLesEtoiles.length; j++) {
-                            toutesLesEtoiles[j].classList.remove("active"); //nom de classe CSS
-                        }
-
-                        noteActuelle = 0;
-
-                    } else {
-
-                        // on enlève tout d'abord
-                        for (let j = 0; j < toutesLesEtoiles.length; j++) {
-                            toutesLesEtoiles[j].classList.remove("active");
-                        }
-
-                        // on colore jusqu'à l'étoile cliquée
-                        for (let j = 0; j < i; j++) {
-                            toutesLesEtoiles[j].classList.add("active");
-                        }
-
-                        noteActuelle = i; // on mémorise la nouvelle note
-                    }
-                };
-
-                Note.appendChild(etoile);
-            }
-
-            // Bouton vote
-            const boutton_vote = document.createElement("button");
-            boutton_vote.textContent = "Vote";
-            boutton_vote.id = "button_vote";
-
-            boutton_vote.addEventListener("click", () => {
-
-                // On récupère les VALEURS
-                let IdOeuvres = data[0].Id;
-                let IdUsers = localStorage.getItem("IdUsers");
-                let valeurNote = noteActuelle;
-                let valeurAvis = Avis.value;
-
-                fetch('/Votes', {
-
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        IdUsers: IdUsers,
-                        IdOeuvres: IdOeuvres,
-                        Note: valeurNote,
-                        Avis: valeurAvis
-                    })
-
-                })
-                    .then(response => response.text())
-                    .then(data => {
-                        alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
-                    });
-            });
-
-            //Affichage
-            if (v != 1) {
-                div.appendChild(h2);
-                div.appendChild(type);
-                div.appendChild(Durée);
-                div.appendChild(Description);
-                div.appendChild(Avis);
-                div.appendChild(Note);
-                div.appendChild(boutton_vote);
-                v++;
-            } else {
-                div.removeChild(div.firstChild);
-                div.removeChild(div.firstChild);
-                div.removeChild(div.firstChild);
-                div.removeChild(div.firstChild);
-                div.removeChild(div.firstChild);
-                div.removeChild(div.firstChild);
-                div.removeChild(div.firstChild);
-                v--;
-            }
-
+        // Récupérer toutes les oeuvres
+        fetch('/Oeuvres', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
         })
-});
+            .then(response => response.json())
+            .then(data => {
+                const div = document.getElementById("gen_contenue_oeuvre");
+
+                // Trouver l'œuvre correspondant à l'ID du bouton
+                const oeuvre = data.find(item => item.Id.toString() === idBouton);
+                if (!oeuvre) {
+                    alert("Oeuvre introuvable !");
+                    return;
+                }
+
+                // Supprimer ancien contenu
+                while (div.firstChild) {
+                    div.removeChild(div.firstChild);
+                }
+
+                // Création des éléments
+                const h2 = document.createElement("h3");
+                h2.id = "titre";
+                h2.textContent = oeuvre.Titre;
+
+                const type = document.createElement("p");
+                type.class = "infos";
+                type.textContent = oeuvre.Type;
+
+                const Durée = document.createElement("p");
+                type.class = "infos";
+                Durée.textContent = oeuvre.Durée;
+
+                const Description = document.createElement("p");
+                Description.id = "description";
+                Description.textContent = oeuvre.Description;
+
+                const Avis = document.createElement("textarea");
+                Avis.type = "text";
+                Avis.id = "Avis";
+                Avis.placeholder = "Donner vos avis sur l'oeuvre.";
+
+                const Note = document.createElement("div");
+                Note.className = "stars";
+                let noteActuelle = 0;
+                for (let j = 1; j <= 5; j++) {
+                    const etoile = document.createElement("span");
+                    etoile.className = "star";
+                    etoile.textContent = "★";
+                    etoile.onclick = function () {
+                        const toutesLesEtoiles = Note.getElementsByClassName("star");
+                        if (noteActuelle === j) {
+                            for (let k = 0; k < toutesLesEtoiles.length; k++) {
+                                toutesLesEtoiles[k].classList.remove("active");
+                            }
+                            noteActuelle = 0;
+                        } else {
+                            for (let k = 0; k < toutesLesEtoiles.length; k++) {
+                                toutesLesEtoiles[k].classList.remove("active");
+                            }
+                            for (let k = 0; k < j; k++) {
+                                toutesLesEtoiles[k].classList.add("active");
+                            }
+                            noteActuelle = j;
+                        }
+                    };
+                    Note.appendChild(etoile);
+                }
+
+                const boutton_vote = document.createElement("button");
+                boutton_vote.textContent = "Vote";
+                boutton_vote.id = "button_vote";
+                boutton_vote.addEventListener("click", () => {
+
+                    // On récupère les VALEURS
+                    let IdOeuvres = data[0].Id;
+                    let IdUsers = localStorage.getItem("IdUsers");
+                    let valeurNote = noteActuelle;
+                    let valeurAvis = Avis.value;
+
+                    fetch('/Votes', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            IdUsers: IdUsers,
+                            IdOeuvres: IdOeuvres,
+                            Note: valeurNote,
+                            Avis: valeurAvis
+                        })
+                    })
+                        .then(resp => resp.text())
+                        .then(msg => alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres));
+                });
+
+                let v = 0;
+
+                //Affichage
+                if (v != 1) {
+                    div.appendChild(h2);
+                    div.appendChild(type);
+                    div.appendChild(Durée);
+                    div.appendChild(Description);
+                    div.appendChild(Avis);
+                    div.appendChild(Note);
+                    div.appendChild(boutton_vote);
+                    v++;
+                } else {
+                    div.removeChild(div.firstChild);
+                    div.removeChild(div.firstChild);
+                    div.removeChild(div.firstChild);
+                    div.removeChild(div.firstChild);
+                    div.removeChild(div.firstChild);
+                    div.removeChild(div.firstChild);
+                    div.removeChild(div.firstChild);
+                    v--;
+                }
+
+            })
+    });
+};
+
+
