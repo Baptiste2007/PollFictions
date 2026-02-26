@@ -41,14 +41,19 @@ button_sign_up.addEventListener('click', () => {
 
 // On récupère tous les boutons avec la classe "contenue_oeuvre"
 const contenue_oeuvre = document.getElementsByClassName("contenue_oeuvre");
+let v = 0;
 
 // On boucle sur tous les boutons
 for (let i = 0; i < contenue_oeuvre.length; i++) {
+
+    // On ajoute un événement au clic sur chaque bouton
     contenue_oeuvre[i].addEventListener("click", function () {
-        const idBouton = this.id; // ID du bouton cliqué
+
+        // 'this' fait référence au bouton cliqué
+        const idBouton = this.id;
         console.log("Le bouton cliqué a l'ID :", idBouton);
 
-        // Récupérer toutes les oeuvres
+        // On récupère toutes les oeuvres
         fetch('/Oeuvres', {
             method: 'GET',
             headers: {
@@ -57,16 +62,17 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
         })
             .then(response => response.json())
             .then(data => {
+
                 const div = document.getElementById("gen_contenue_oeuvre");
 
-                // Trouver l'œuvre correspondant à l'ID du bouton
+                // On trouve l'oeuvre correspondant à l'ID du bouton
                 const oeuvre = data.find(item => item.Id.toString() === idBouton);
                 if (!oeuvre) {
                     alert("Oeuvre introuvable !");
                     return;
                 }
 
-                // Supprimer ancien contenu
+                // On supprime l'ancien contenu
                 while (div.firstChild) {
                     div.removeChild(div.firstChild);
                 }
@@ -77,11 +83,11 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                 h2.textContent = oeuvre.Titre;
 
                 const type = document.createElement("p");
-                type.class = "infos";
+                type.className = "infos";
                 type.textContent = oeuvre.Type;
 
                 const Durée = document.createElement("p");
-                type.class = "infos";
+                Durée.className = "infos";
                 Durée.textContent = oeuvre.Durée;
 
                 const Description = document.createElement("p");
@@ -95,13 +101,16 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
 
                 const Note = document.createElement("div");
                 Note.className = "stars";
+
                 let noteActuelle = 0;
                 for (let j = 1; j <= 5; j++) {
                     const etoile = document.createElement("span");
                     etoile.className = "star";
                     etoile.textContent = "★";
+
                     etoile.onclick = function () {
                         const toutesLesEtoiles = Note.getElementsByClassName("star");
+
                         if (noteActuelle === j) {
                             for (let k = 0; k < toutesLesEtoiles.length; k++) {
                                 toutesLesEtoiles[k].classList.remove("active");
@@ -117,19 +126,20 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                             noteActuelle = j;
                         }
                     };
+
                     Note.appendChild(etoile);
                 }
 
                 const boutton_vote = document.createElement("button");
                 boutton_vote.textContent = "Vote";
                 boutton_vote.id = "button_vote";
-                boutton_vote.addEventListener("click", () => {
 
-                    // On récupère les VALEURS
-                    let IdOeuvres = data[0].Id;
-                    let IdUsers = localStorage.getItem("IdUsers");
-                    let valeurNote = noteActuelle;
-                    let valeurAvis = Avis.value;
+                boutton_vote.addEventListener("click", function () {
+
+                    const IdOeuvres = oeuvre.Id;
+                    const IdUsers = localStorage.getItem("IdUsers");
+                    const valeurNote = noteActuelle;
+                    const valeurAvis = Avis.value;
 
                     fetch('/Votes', {
                         method: 'POST',
@@ -141,35 +151,22 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                             Avis: valeurAvis
                         })
                     })
-                        .then(resp => resp.text())
-                        .then(msg => alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres));
+                        .then(response => response.text())
+                        .then(msg => {
+                            alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
+                        });
                 });
 
-                let v = 0;
-
-                //Affichage
-                if (v != 1) {
-                    div.appendChild(h2);
-                    div.appendChild(type);
-                    div.appendChild(Durée);
-                    div.appendChild(Description);
-                    div.appendChild(Avis);
-                    div.appendChild(Note);
-                    div.appendChild(boutton_vote);
-                    v++;
-                } else {
-                    div.removeChild(div.firstChild);
-                    div.removeChild(div.firstChild);
-                    div.removeChild(div.firstChild);
-                    div.removeChild(div.firstChild);
-                    div.removeChild(div.firstChild);
-                    div.removeChild(div.firstChild);
-                    div.removeChild(div.firstChild);
-                    v--;
-                }
+                // On ajoute tout à la div
+                div.appendChild(h2);
+                div.appendChild(type);
+                div.appendChild(Durée);
+                div.appendChild(Description);
+                div.appendChild(Avis);
+                div.appendChild(Note);
+                div.appendChild(boutton_vote);
+                v++;
 
             })
     });
-};
-
-
+}
