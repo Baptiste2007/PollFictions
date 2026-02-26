@@ -54,6 +54,7 @@
 h4{
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 .B_image_car {
@@ -202,6 +203,11 @@ h4{
     line-height: 1.7;
     color: white;
     margin-bottom: 20px;
+}
+
+.stars{
+    display: flex;
+    justify-content: center;
 }
 
 /* Étoiles neutres */
