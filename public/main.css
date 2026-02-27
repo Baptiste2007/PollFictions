@@ -75,7 +75,6 @@ h4{
     overflow-x: auto;
     margin: 3em auto;
     display: flex;
-    gap: 1em;
     scroll-behavior: smooth;
     anchor-name: --carroucel;
     scroll-snap-type: x mandatory;
@@ -155,7 +154,7 @@ h4{
 }
 
 .col {
-    margin-left: 15%;
+    margin-left: 30vh;
 }
 
 @media(max-width: 500px) {
