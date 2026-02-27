@@ -1,27 +1,38 @@
 const connection = document.getElementById("button_connection");
-connection.addEventListener('click', () => {
-    const login = document.getElementById('login').value;
-    const password = document.getElementById('Password').value;
-
-    fetch('/connexion', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ login: login, password: password })
-    }).then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            alert('ID utilisateur : ' + data.user.Id);
-            localStorage.setItem("IdUsers", data.user.Id);
-        });
-
+if (localStorage.getItem("IdUsers") !== null) {
     fetch('/info')
         .then(responsebrute => responsebrute.json())
         .then(
             responsejson => {
                 document.getElementById('reponse').innerHTML = responsejson.cle2;
+                connection.value = responsejson.cle1;
             });
+}
+connection.addEventListener('click', () => {
+
+    if (localStorage.getItem("IdUsers") !== null) {
+        // Déconnexion
+        localStorage.removeItem('IdUsers');
+        location.reload();
+    } else {
+        // Connexion
+        const login = document.getElementById('login').value;
+        const password = document.getElementById('Password').value;
+
+        fetch('/connexion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ login: login, password: password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                localStorage.setItem("IdUsers", data.user.Id);
+                location.reload();
+            });
+    }
 });
 
 const button_sign_up = document.getElementById('button_sign_up');
@@ -42,7 +53,6 @@ button_sign_up.addEventListener('click', () => {
 // On récupère tous les boutons avec la classe "contenue_oeuvre"
 const contenue_oeuvre = document.getElementsByClassName("contenue_oeuvre");
 let v = 0;
-
 // On boucle sur tous les boutons
 for (let i = 0; i < contenue_oeuvre.length; i++) {
 
