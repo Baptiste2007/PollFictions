@@ -25,7 +25,7 @@ connection.addEventListener('click', () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ login: login, password: password })
-            
+
         })
             .then(response => response.json())
             .then(data => {
@@ -111,7 +111,6 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
 
                 const Note = document.createElement("div");
                 Note.className = "stars";
-
                 let noteActuelle = 0;
                 for (let j = 1; j <= 5; j++) {
                     const etoile = document.createElement("span");
@@ -165,19 +164,73 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                             .then(msg => {
                                 alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
                             });
-                    }else{
+                    } else {
                         alert('Connectez-vous pour pouvoir voter');
                     }
                 });
-//----------------------------------------------------------------------------
+
                 const boutton_voir_vote = document.createElement("button");
                 boutton_voir_vote.textContent = "Voir les votes";
                 boutton_voir_vote.id = "boutton_voir_vote";
 
                 boutton_voir_vote.addEventListener("click", function () {
-                    
+
+                    const A_N = document.getElementById("A_N");
+                    A_N.innerHTML = ""; // on vide avant affichage
+
+                    fetch('/Votes')
+                        .then(response => response.json())
+                        .then(votes => {
+
+                            fetch('/Users')
+                                .then(response => response.json())
+                                .then(users => {
+                                    const Q_O = document.createElement("h3");
+                                    Q_O.id = "titre";
+                                    Q_O.textContent = oeuvre.Titre;
+                                    A_N.appendChild(Q_O);
+                                    for (let i = 0; i < votes.length; i++) {
+
+                                        // On vérifie si le vote correspond à l'œuvre cliquée
+                                        if (votes[i].IdOeuvres == oeuvre.Id) {
+
+                                            let nomUser = "Utilisateur inconnu";
+
+                                            for (let j = 0; j < users.length; j++) {
+                                                if (users[j].Id == votes[i].IdUsers) {
+                                                    nomUser = users[j].Login;
+                                                }
+                                            }
+
+                                            const bloc = document.createElement("div");
+
+                                            // étoiles
+                                            for (let t = 0; t < 5; t++) {
+                                                const etoile = document.createElement("span");
+                                                etoile.textContent = "★";
+                                                etoile.className = "star";
+
+                                                if (t < votes[i].Note) {
+                                                    etoile.classList.add("active");
+                                                }
+
+                                                bloc.appendChild(etoile);
+                                            }
+
+                                            const texte = document.createElement("p");
+                                            texte.textContent = "Avis de " + nomUser + " : " + votes[i].Avis;
+
+
+                                            bloc.appendChild(texte);
+                                            A_N.appendChild(bloc);
+                                        }
+                                    }
+
+                                });
+
+                        });
+
                 });
-//-----------------------------------------------------------------------------
                 // On ajoute tout à la div
                 div.appendChild(h2);
                 div.appendChild(type);

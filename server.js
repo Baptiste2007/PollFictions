@@ -123,6 +123,18 @@ app.post('/Votes', (req, res) => {
   );
 });
 
+//Récup vote
+app.get('/Votes', (req, res) => {
+  connection.query('SELECT * FROM Votes', (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la récupération des utilisateurs :', err);
+      res.status(500).json({ message: 'Erreur serveur' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
 // Pour récupérer les oeuvres :
 app.get('/Oeuvres', (req, res) => {
   connection.query('SELECT * FROM Oeuvres', (err, results) => {
