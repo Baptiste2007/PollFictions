@@ -25,10 +25,10 @@ connection.addEventListener('click', () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ login: login, password: password })
+            
         })
             .then(response => response.json())
             .then(data => {
-                alert(data.message);
                 localStorage.setItem("IdUsers", data.user.Id);
                 location.reload();
             });
@@ -150,23 +150,34 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                     const IdUsers = localStorage.getItem("IdUsers");
                     const valeurNote = noteActuelle;
                     const valeurAvis = Avis.value;
-
-                    fetch('/Votes', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            IdUsers: IdUsers,
-                            IdOeuvres: IdOeuvres,
-                            Note: valeurNote,
-                            Avis: valeurAvis
+                    if (localStorage.getItem("IdUsers") !== null) {
+                        fetch('/Votes', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                IdUsers: IdUsers,
+                                IdOeuvres: IdOeuvres,
+                                Note: valeurNote,
+                                Avis: valeurAvis
+                            })
                         })
-                    })
-                        .then(response => response.text())
-                        .then(msg => {
-                            alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
-                        });
+                            .then(response => response.text())
+                            .then(msg => {
+                                alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
+                            });
+                    }else{
+                        alert('Connectez-vous pour pouvoir voter');
+                    }
                 });
+//----------------------------------------------------------------------------
+                const boutton_voir_vote = document.createElement("button");
+                boutton_voir_vote.textContent = "Voir les votes";
+                boutton_voir_vote.id = "boutton_voir_vote";
 
+                boutton_voir_vote.addEventListener("click", function () {
+                    
+                });
+//-----------------------------------------------------------------------------
                 // On ajoute tout à la div
                 div.appendChild(h2);
                 div.appendChild(type);
@@ -175,6 +186,7 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                 div.appendChild(Avis);
                 div.appendChild(Note);
                 div.appendChild(boutton_vote);
+                div.appendChild(boutton_voir_vote);
                 v++;
 
             })
