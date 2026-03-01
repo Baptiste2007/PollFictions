@@ -5,7 +5,7 @@ if (localStorage.getItem("IdUsers") !== null) {
         .then(
             responsejson => {
                 document.getElementById('reponse').innerHTML = responsejson.cle2;
-                connection.value = responsejson.cle1;
+                connection.innerHTML = responsejson.cle1;
             });
 }
 connection.addEventListener('click', () => {
@@ -46,7 +46,7 @@ button_sign_up.addEventListener('click', () => {
         body: JSON.stringify({ inputValue: login.value, inputValue2: Password.value })
     }).then(response => response.text())
         .then(data => {
-            alert(data);
+
         });
 });
 
@@ -75,14 +75,22 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
 
                 const div = document.getElementById("gen_contenue_oeuvre");
 
-                // On trouve l'oeuvre correspondant à l'ID du bouton
-                const oeuvre = data.find(item => item.Id.toString() === idBouton);
-                if (!oeuvre) {
+                //Trouver l'oeuvre correspondant à l'ID du bouton
+                let oeuvre = null;
+
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].Id == idBouton) {
+                        oeuvre = data[i];
+                        break;
+                    }
+                }
+
+                if (oeuvre == null) {
                     alert("Oeuvre introuvable !");
                     return;
                 }
 
-                // On supprime l'ancien contenu
+                // supprime l'ancien contenu
                 while (div.firstChild) {
                     div.removeChild(div.firstChild);
                 }
