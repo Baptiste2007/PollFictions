@@ -37,219 +37,211 @@ connection.addEventListener('click', () => {
 
 const button_sign_up = document.getElementById('button_sign_up');
 button_sign_up.addEventListener('click', () => {
-    const Password = document.getElementById('Password');
-    fetch('/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ inputValue: login.value, inputValue2: Password.value })
-    }).then(response => response.text())
-        .then(data => {
+    const login = document.getElementById('login').value.trim();
+    const password = document.getElementById('Password').value.trim();
 
-        });
-});
-
-// On récupère tous les boutons avec la classe "contenue_oeuvre"
-const contenue_oeuvre = document.getElementsByClassName("contenue_oeuvre");
-let v = 0;
-// On boucle sur tous les boutons
-for (let i = 0; i < contenue_oeuvre.length; i++) {
-
-    // On ajoute un événement au clic sur chaque bouton
-    contenue_oeuvre[i].addEventListener("click", function () {
-
-        // 'this' fait référence au bouton cliqué
-        const idBouton = this.id;
-        console.log("Le bouton cliqué a l'ID :", idBouton);
-
-        // On récupère toutes les oeuvres
-        fetch('/Oeuvres', {
-            method: 'GET',
+    if (login !== "" && password !== "") {
+        fetch('/register', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify({
+                inputValue: login,
+                inputValue2: password
+            })
         })
+            // La requête a échoué (400, 500...)
+            .then(response => {
+                // si la requête échoue (login déjà existant)
+                if (!response.ok) {
+                    alert("Ne pas dupliquer les identifiants");
+                } else {
+                    // La requête a réussi
+                    alert("Compte créé !");
+                }
+            });
+    } else {
+        alert('Votre identifiant et votre mot de passe ne doivent pas être vides ou contenir uniquement des espaces.');
+    }
+});
+
+// récupère tous les boutons avec la classe "contenue_oeuvre"
+const contenue_oeuvre = document.getElementsByClassName("contenue_oeuvre");
+
+// boucle sur tous les boutons
+for (let i = 0; i < contenue_oeuvre.length; i++) {
+    let bouton = contenue_oeuvre[i];
+
+    bouton.addEventListener("click", function () {
+        const idBouton = bouton.id;
+
+        fetch('/Oeuvres', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
             .then(response => response.json())
             .then(data => {
-
-                const div = document.getElementById("gen_contenue_oeuvre");
-
-                //Trouver l'oeuvre correspondant à l'ID du bouton
                 let oeuvre = null;
 
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i].Id == idBouton) {
-                        oeuvre = data[i];
+                for (let k = 0; k < data.length; k++) {
+                    if (data[k].Id == idBouton) {
+                        oeuvre = data[k];
                         break;
                     }
                 }
 
                 if (oeuvre == null) {
                     alert("Oeuvre introuvable !");
-                    return;
-                }
+                } else {
+                    const div = document.getElementById("gen_contenue_oeuvre");
 
-                // supprime l'ancien contenu
-                while (div.firstChild) {
-                    div.removeChild(div.firstChild);
-                }
-
-                // Création des éléments
-                const h2 = document.createElement("h3");
-                h2.id = "titre";
-                h2.textContent = oeuvre.Titre;
-
-                const type = document.createElement("p");
-                type.className = "infos";
-                type.textContent = oeuvre.Type;
-
-                const Durée = document.createElement("p");
-                Durée.className = "infos";
-                Durée.textContent = oeuvre.Durée;
-
-                const Description = document.createElement("p");
-                Description.id = "description";
-                Description.textContent = oeuvre.Description;
-
-                const Avis = document.createElement("textarea");
-                Avis.type = "text";
-                Avis.id = "Avis";
-                Avis.placeholder = "Donner vos avis sur l'oeuvre.";
-
-                const Note = document.createElement("div");
-                Note.className = "stars";
-                let noteActuelle = 0;
-                for (let j = 1; j <= 5; j++) {
-                    const etoile = document.createElement("span");
-                    etoile.className = "star";
-                    etoile.textContent = "★";
-
-                    etoile.onclick = function () {
-                        const toutesLesEtoiles = Note.getElementsByClassName("star");
-
-                        if (noteActuelle === j) {
-                            for (let k = 0; k < toutesLesEtoiles.length; k++) {
-                                toutesLesEtoiles[k].classList.remove("active");
-                            }
-                            noteActuelle = 0;
-                        } else {
-                            for (let k = 0; k < toutesLesEtoiles.length; k++) {
-                                toutesLesEtoiles[k].classList.remove("active");
-                            }
-                            for (let k = 0; k < j; k++) {
-                                toutesLesEtoiles[k].classList.add("active");
-                            }
-                            noteActuelle = j;
-                        }
-                    };
-
-                    Note.appendChild(etoile);
-                }
-
-                const boutton_vote = document.createElement("button");
-                boutton_vote.textContent = "Vote";
-                boutton_vote.id = "button_vote";
-
-                boutton_vote.addEventListener("click", function () {
-
-                    const IdOeuvres = oeuvre.Id;
-                    const IdUsers = localStorage.getItem("IdUsers");
-                    const valeurNote = noteActuelle;
-                    const valeurAvis = Avis.value;
-                    if (localStorage.getItem("IdUsers") !== null) {
-                        fetch('/Votes', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                IdUsers: IdUsers,
-                                IdOeuvres: IdOeuvres,
-                                Note: valeurNote,
-                                Avis: valeurAvis
-                            })
-                        })
-                            .then(response => response.text())
-                            .then(msg => {
-                                alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
-                            });
-                    } else {
-                        alert('Connectez-vous pour pouvoir voter');
+                    // supprime l'ancien contenu
+                    while (div.firstChild) {
+                        div.removeChild(div.firstChild);
                     }
-                });
 
-                const boutton_voir_vote = document.createElement("button");
-                boutton_voir_vote.textContent = "Voir les votes";
-                boutton_voir_vote.id = "boutton_voir_vote";
+                    // Création des éléments
+                    const h2 = document.createElement("h3");
+                    h2.id = "titre";
+                    h2.textContent = oeuvre.Titre;
 
-                boutton_voir_vote.addEventListener("click", function () {
+                    const type = document.createElement("p");
+                    type.className = "infos";
+                    type.textContent = oeuvre.Type;
 
-                    const A_N = document.getElementById("A_N");
-                    A_N.innerHTML = ""; // on vide avant affichage
+                    const duree = document.createElement("p");
+                    duree.className = "infos";
+                    duree.textContent = oeuvre.Durée;
 
-                    fetch('/Votes')
-                        .then(response => response.json())
-                        .then(votes => {
+                    const description = document.createElement("p");
+                    description.id = "description";
+                    description.textContent = oeuvre.Description;
 
-                            fetch('/Users')
-                                .then(response => response.json())
-                                .then(users => {
-                                    const Q_O = document.createElement("h3");
-                                    Q_O.id = "titre";
-                                    Q_O.textContent = oeuvre.Titre;
-                                    A_N.appendChild(Q_O);
-                                    for (let i = 0; i < votes.length; i++) {
+                    const avis = document.createElement("textarea");
+                    avis.type = "text";
+                    avis.id = "Avis";
+                    avis.placeholder = "Donner vos avis sur l'oeuvre.";
 
-                                        // On vérifie si le vote correspond à l'œuvre cliquée
-                                        if (votes[i].IdOeuvres == oeuvre.Id) {
+                    const noteDiv = document.createElement("div");
+                    noteDiv.className = "stars";
+                    let noteActuelle = 0;
 
-                                            let nomUser = "Utilisateur inconnu";
+                    for (let s = 1; s <= 5; s++) {
+                        const etoile = document.createElement("span");
+                        etoile.className = "star";
+                        etoile.textContent = "★";
 
-                                            for (let j = 0; j < users.length; j++) {
-                                                if (users[j].Id == votes[i].IdUsers) {
-                                                    nomUser = users[j].Login;
-                                                }
-                                            }
+                        etoile.onclick = function () {
+                            const toutesLesEtoiles = noteDiv.getElementsByClassName("star");
 
-                                            const bloc = document.createElement("div");
+                            if (noteActuelle === s) {
+                                for (let k = 0; k < toutesLesEtoiles.length; k++) {
+                                    toutesLesEtoiles[k].classList.remove("active");
+                                }
+                                noteActuelle = 0;
+                            } else {
+                                for (let k = 0; k < toutesLesEtoiles.length; k++) {
+                                    toutesLesEtoiles[k].classList.remove("active");
+                                }
+                                for (let k = 0; k < s; k++) {
+                                    toutesLesEtoiles[k].classList.add("active");
+                                }
+                                noteActuelle = s;
+                            }
+                        };
 
-                                            // étoiles
-                                            for (let t = 0; t < 5; t++) {
-                                                const etoile = document.createElement("span");
-                                                etoile.textContent = "★";
-                                                etoile.className = "star";
+                        noteDiv.appendChild(etoile);
+                    }
 
-                                                if (t < votes[i].Note) {
-                                                    etoile.classList.add("active");
-                                                }
+                    const boutonVote = document.createElement("button");
+                    boutonVote.textContent = "Vote";
+                    boutonVote.id = "button_vote";
 
-                                                bloc.appendChild(etoile);
-                                            }
+                    boutonVote.addEventListener("click", function () {
+                        const IdOeuvres = oeuvre.Id;
+                        const IdUsers = localStorage.getItem("IdUsers");
+                        const valeurNote = noteActuelle;
+                        const valeurAvis = avis.value;
 
-                                            const texte = document.createElement("p");
-                                            texte.textContent = "Avis de " + nomUser + " : " + votes[i].Avis;
-
-
-                                            bloc.appendChild(texte);
-                                            A_N.appendChild(bloc);
-                                        }
-                                    }
-
+                        if (IdUsers !== null) {
+                            fetch('/Votes', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    IdUsers: IdUsers,
+                                    IdOeuvres: IdOeuvres,
+                                    Note: valeurNote,
+                                    Avis: valeurAvis
+                                })
+                            })
+                                .then(response => response.text())
+                                .then(msg => {
+                                    alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
                                 });
+                        } else {
+                            alert('Connectez-vous pour pouvoir voter');
+                        }
+                    });
 
-                        });
+                    const boutonVoirVote = document.createElement("button");
+                    boutonVoirVote.textContent = "Voir les votes";
+                    boutonVoirVote.id = "bouton_voir_vote";
 
-                });
-                // On ajoute tout à la div
-                div.appendChild(h2);
-                div.appendChild(type);
-                div.appendChild(Durée);
-                div.appendChild(Description);
-                div.appendChild(Avis);
-                div.appendChild(Note);
-                div.appendChild(boutton_vote);
-                div.appendChild(boutton_voir_vote);
-                v++;
+                    boutonVoirVote.addEventListener("click", function () {
+                        const A_N = document.getElementById("A_N");
+                        A_N.innerHTML = ""; // vide avant affichage
 
+                        fetch('/Votes')
+                            .then(response => response.json())
+                            .then(votes => {
+                                fetch('/Users')
+                                    .then(response => response.json())
+                                    .then(users => {
+                                        const titreOeuvre = document.createElement("h3");
+                                        titreOeuvre.id = "titre";
+                                        titreOeuvre.textContent = oeuvre.Titre;
+                                        A_N.appendChild(titreOeuvre);
+
+                                        for (let v = 0; v < votes.length; v++) {
+                                            if (votes[v].IdOeuvres == oeuvre.Id) {
+                                                let nomUser = "Utilisateur inconnu";
+                                                for (let u = 0; u < users.length; u++) {
+                                                    if (users[u].Id == votes[v].IdUsers) {
+                                                        nomUser = users[u].Login;
+                                                    }
+                                                }
+
+                                                const bloc = document.createElement("div");
+
+                                                for (let t = 0; t < 5; t++) {
+                                                    const etoile = document.createElement("span");
+                                                    etoile.textContent = "★";
+                                                    etoile.className = "star";
+                                                    if (t < votes[v].Note) {
+                                                        etoile.classList.add("active");
+                                                    }
+                                                    bloc.appendChild(etoile);
+                                                }
+
+                                                const texte = document.createElement("p");
+                                                texte.textContent = "Avis de " + nomUser + " : " + votes[v].Avis;
+                                                bloc.appendChild(texte);
+
+                                                A_N.appendChild(bloc);
+                                            }
+                                        }
+                                    });
+                            });
+                    });
+
+                    // On ajoute tous les éléments à la div
+                    div.appendChild(h2);
+                    div.appendChild(type);
+                    div.appendChild(duree);
+                    div.appendChild(description);
+                    div.appendChild(avis);
+                    div.appendChild(noteDiv);
+                    div.appendChild(boutonVote);
+                    div.appendChild(boutonVoirVote);
+                }
             })
-    });
-}
+    })
+};

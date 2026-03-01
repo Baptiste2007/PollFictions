@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : dim. 01 mars 2026 à 02:43
+-- Généré le : dim. 01 mars 2026 à 21:38
 -- Version du serveur : 11.8.3-MariaDB-0+deb13u1 from Debian
 -- Version de PHP : 8.4.16
 
@@ -68,13 +68,18 @@ CREATE TABLE `Users` (
 
 INSERT INTO `Users` (`Id`, `Login`, `Password`) VALUES
 (1, 'Baptiste', '4444'),
-(2, '', ''),
-(3, '', ''),
+(2, 'swfsf', 'sfsfs'),
+(3, 'sgfsfsf', 'sfsfsf'),
 (4, 'sgdgd', 'dfgdgfd'),
 (5, 'geoffrey', 'je_suis_bo'),
 (6, 'geo', '1234'),
 (7, 'GMorelle-2412', '1234'),
-(8, 'GOEFFREY.MERELLE', '4564');
+(8, 'GOEFFREY.MERELLE', '4564'),
+(14, 'ddfdgf', 'fvftgguyfg'),
+(20, 'GMorelle-24', '4564'),
+(22, 'GMorelle-', '4564'),
+(24, 'GMore', '4564'),
+(27, 'qsdsfsfgsh', '1234');
 
 -- --------------------------------------------------------
 
@@ -111,7 +116,9 @@ INSERT INTO `Votes` (`Id`, `Note`, `Avis`, `IdUsers`, `IdOeuvres`, `Date`) VALUE
 (14, 5, 'je suis bo', 7, 1, '2026-02-26'),
 (15, 5, 'c\'est coul', 7, 1, '2026-02-26'),
 (16, 5, 'oui', 7, 1, '2026-02-27'),
-(17, 3, 'cc', 7, 1, '2026-03-01');
+(17, 3, 'cc', 7, 1, '2026-03-01'),
+(18, 3, 'sdsds', 2, 3, '2026-03-01'),
+(19, 5, 'fesdfesfesfefr', 7, 3, '2026-03-01');
 
 --
 -- Index pour les tables déchargées
@@ -127,7 +134,8 @@ ALTER TABLE `Oeuvres`
 -- Index pour la table `Users`
 --
 ALTER TABLE `Users`
-  ADD PRIMARY KEY (`Id`);
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Login` (`Login`);
 
 --
 -- Index pour la table `Votes`
@@ -151,13 +159,13 @@ ALTER TABLE `Oeuvres`
 -- AUTO_INCREMENT pour la table `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `Id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT pour la table `Votes`
 --
 ALTER TABLE `Votes`
-  MODIFY `Id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `Id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Contraintes pour les tables déchargées
