@@ -66,9 +66,28 @@ button_sign_up.addEventListener('click', () => {
     }
 });
 
+//Voir moyenne des votes
+
+//récupérer tout les votes des users
+fetch('/Votes')
+    .then(response => response.json())
+    .then(data => {
+        for (let r = 0; r < data.length; r++) {
+            //récupe id des oeuvre
+            const oeuvres = document.getElementsByClassName("B_image_car");
+
+            //id vote (bdd)
+            const votes = data[r].IdOeuvres;
+
+            //comparer les id des oeuvres avec les id vote (bdd)
+            if (votes == oeuvres[r].id) {
+
+            }
+        }
+    });
+
 // récupère tous les boutons avec la classe "contenue_oeuvre"
 const contenue_oeuvre = document.getElementsByClassName("contenue_oeuvre");
-
 // boucle sur tous les boutons
 for (let i = 0; i < contenue_oeuvre.length; i++) {
     let bouton = contenue_oeuvre[i];
