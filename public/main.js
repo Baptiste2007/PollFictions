@@ -66,25 +66,70 @@ button_sign_up.addEventListener('click', () => {
     }
 });
 
-//Voir moyenne des votes
-
+//moyenne
 //récupérer tout les votes des users
 fetch('/Votes')
     .then(response => response.json())
     .then(data => {
-        for (let r = 0; r < data.length; r++) {
-            //récupe id des oeuvre
-            const oeuvres = document.getElementsByClassName("B_image_car");
+        //max votes
+        let max_votes = data.length;
 
-            //id vote (bdd)
-            const votes = data[r].IdOeuvres;
+        //récupe id des oeuvre
+        const oeuvres = document.getElementsByClassName("B_image_car");
+        let max_oeuvre = oeuvres.length;
 
-            //comparer les id des oeuvres avec les id vote (bdd)
-            if (votes == oeuvres[r].id) {
+        // Initialisation correcte des tableaux
+        let sauve_note = Array(max_oeuvre).fill(0);
+        let nbtvote = Array(max_oeuvre).fill(0);
 
+        // Comparer les id des oeuvres avec les id vote (bdd)
+        for (let i = 0; i < max_votes; i++) {
+            let oeuvre_ctl = data[i].IdOeuvres;
+
+            for (let j = 0; j < max_oeuvre; j++) {
+                if (oeuvre_ctl == oeuvres[j].id) {
+                    sauve_note[j] += data[i].Note;
+                    nbtvote[j] += 1;
+                }
             }
         }
+
+        // Moyenne
+        let moyenne = Array(max_oeuvre).fill(0);
+        for (let m = 0; m < max_oeuvre; m++) {
+            if (nbtvote[m] > 0) {
+                moyenne[m] = sauve_note[m] / nbtvote[m];
+                moyenne[m] = Math.floor(moyenne[m]); //prendre uniquemment les chiffres avent la virgule
+            } else {
+                moyenne[m] = 0; // si null alors indiquer "pas de vote"
+            }
+        }
+
+        // création des étoiles
+        const B_image_car = document.getElementsByClassName("B_image_car");
+
+        for (let v = 0; v < B_image_car.length; v++) {
+            const container = B_image_car[v];
+
+            const bloc = document.createElement("div");
+
+            for (let t = 0; t < 5; t++) {
+                const etoile = document.createElement("span");
+                etoile.textContent = "★";
+                etoile.className = "star";
+
+                if (t < moyenne[v]) {
+                    etoile.classList.add("active");
+                }
+
+                bloc.appendChild(etoile);
+            }
+
+            container.appendChild(bloc);
+        }
+
     });
+
 
 // récupère tous les boutons avec la classe "contenue_oeuvre"
 const contenue_oeuvre = document.getElementsByClassName("contenue_oeuvre");

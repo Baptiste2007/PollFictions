@@ -59,6 +59,8 @@ h4 {
 
 .B_image_car {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     flex: 1 1 auto;
     padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
 }
