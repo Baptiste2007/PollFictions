@@ -14,20 +14,20 @@ const connection = mysql.createConnection({
 });*/
 
 //MORELLE Geoffrey (La Providence):
-/*const connection = mysql.createConnection({
-  host: '172.29.18.115',
+const connection = mysql.createConnection({
+  host: '172.29.20.238',
   user: 'accessNodeServerDemo',
   password: 'accessNodeServerDemo',
   database: 'Poll Fictions'
-});*/
+});
 
 //MORELLE Geoffrey (Maison):
-const connection = mysql.createConnection({
+/*const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'root',
   database: 'Poll Fictions'
-});
+});*/
 
 // pour ce connectés a la maison (Baptiste)
 //const connection = mysql.createConnection({
