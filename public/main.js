@@ -70,6 +70,9 @@ button_sign_up.addEventListener('click', () => {
 //moyenne
 let sauve = 0;
 let erre = Array(sauve).fill(0);
+
+let tab_sauv_nbt = Array(sauve).fill(0);
+
 //récupérer tout les votes des users
 fetch('/Votes')
     .then(response => response.json())
@@ -84,7 +87,7 @@ fetch('/Votes')
 
         // Initialisation des tableaux
         let sauve_note = Array(max_oeuvre).fill(0);
-        let nbtvote = Array(max_oeuvre).fill(0);;
+        let nbtvote = Array(max_oeuvre).fill(0);
 
         // Comparer les id des oeuvres avec les id vote (bdd)
         for (let i = 0; i < max_votes; i++) {
@@ -94,6 +97,7 @@ fetch('/Votes')
                 if (oeuvre_ctl == oeuvres[j].id) {
                     sauve_note[j] += data[i].Note;
                     nbtvote[j] += 1;
+                    tab_sauv_nbt[j] = nbtvote[j];
                 }
             }
         }
@@ -115,8 +119,21 @@ fetch('/Votes')
         for (let v = 0; v < B_image_car.length; v++) {
             const container = B_image_car[v];
 
+            // Création du paragraphe pour afficher la valeur max
+            const max = document.createElement("p");
+            max.id = "max_vote";
+
+            const nbVotes = tab_sauv_nbt[v];
+            let valeur = 0;
+
+            if (nbVotes !== undefined) {
+                valeur = nbVotes;
+            }
+            max.textContent = "Vote de " + valeur + " utilisateur(s)";
+
             const bloc = document.createElement("div");
 
+            // Génération des étoiles
             for (let t = 0; t < 5; t++) {
                 const etoile = document.createElement("span");
                 etoile.textContent = "★";
@@ -130,7 +147,10 @@ fetch('/Votes')
             }
 
             container.appendChild(bloc);
+            container.appendChild(max);
+
         }
+
 
         //voir doublon vote user
         const user = localStorage.getItem("IdUsers");
@@ -238,7 +258,7 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                         const valeurNote = noteActuelle;
                         const valeurAvis = avis.value;
 
-                        if (erre[idBouton-1] != 975) {
+                        if (erre[idBouton - 1] != 975) {
                             if (IdUsers !== null) {
                                 fetch('/Votes', {
                                     method: 'POST',

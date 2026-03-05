@@ -216,8 +216,7 @@ h4 {
     cursor: pointer;
     transition: transform 0.25s ease, color 0.25s ease;
     margin-right: 6px;
-    color: whitesmoke;
-    /* gris bleuté */
+    color: #afafaf;
 }
 
 /* Étoile active (contraste chaud conservé) */
