@@ -67,12 +67,15 @@ button_sign_up.addEventListener('click', () => {
 });
 
 //moyenne
+let sauve = 0;
+let erre = Array(sauve).fill(0);
 //récupérer tout les votes des users
 fetch('/Votes')
     .then(response => response.json())
     .then(data => {
         //max votes
         let max_votes = data.length;
+        sauve = max_votes;
 
         //récupe id des oeuvre
         const oeuvres = document.getElementsByClassName("B_image_car");
@@ -127,8 +130,18 @@ fetch('/Votes')
 
             container.appendChild(bloc);
         }
-    });
 
+        //voir doublon vote user
+        const user = localStorage.getItem("IdUsers");
+        for (let o = 0; o < max_oeuvre; o++) {
+            for (let v = 0; v < max_votes; v++) {
+                if (user == data[v].IdUsers && oeuvres[o].id == data[v].IdOeuvres) {
+                    erre[o] = 975;
+                }
+
+            }
+        }
+    });
 
 // récupère tous les boutons avec la classe "contenue_oeuvre"
 const contenue_oeuvre = document.getElementsByClassName("contenue_oeuvre");
@@ -187,6 +200,7 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                     noteDiv.className = "stars";
                     let noteActuelle = 0;
 
+                    //étoile
                     for (let s = 1; s <= 5; s++) {
                         const etoile = document.createElement("span");
                         etoile.className = "star";
@@ -217,38 +231,41 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                     const boutonVote = document.createElement("button");
                     boutonVote.textContent = "Vote";
                     boutonVote.id = "button_vote";
-
                     boutonVote.addEventListener("click", function () {
                         const IdOeuvres = oeuvre.Id;
                         const IdUsers = localStorage.getItem("IdUsers");
                         const valeurNote = noteActuelle;
                         const valeurAvis = avis.value;
 
-                        if (IdUsers !== null) {
-                            fetch('/Votes', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    IdUsers: IdUsers,
-                                    IdOeuvres: IdOeuvres,
-                                    Note: valeurNote,
-                                    Avis: valeurAvis
+                        if (erre[idBouton-1] != 975) {
+                            if (IdUsers !== null) {
+                                fetch('/Votes', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        IdUsers: IdUsers,
+                                        IdOeuvres: IdOeuvres,
+                                        Note: valeurNote,
+                                        Avis: valeurAvis
+                                    })
                                 })
-                            })
-                                .then(response => response.text())
-                                .then(msg => {
-                                    alert("Utilisateur " + IdUsers + " a voté pour l'oeuvre " + IdOeuvres);
-                                });
+                                    .then(response => response.json())
+                                    .then(bdd => {
+                                        alert("Vote entregistrer");
+                                    });
+                            } else {
+                                alert('Connectez-vous pour pouvoir voter');
+                            }
+                            location.reload();
                         } else {
-                            alert('Connectez-vous pour pouvoir voter');
+                            alert("Vous ne pouver pas voter deux foit pour la méme oeuvre");
                         }
-                        location.reload();
+
                     });
 
                     const boutonVoirVote = document.createElement("button");
                     boutonVoirVote.textContent = "Voir les votes";
                     boutonVoirVote.id = "bouton_voir_vote";
-
                     boutonVoirVote.addEventListener("click", function () {
                         const A_N = document.getElementById("A_N");
                         A_N.innerHTML = ""; // vide avant affichage
