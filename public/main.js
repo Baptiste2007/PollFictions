@@ -4,7 +4,7 @@ if (localStorage.getItem("IdUsers") !== null) {
         .then(responsebrute => responsebrute.json())
         .then(
             responsejson => {
-                document.getElementById('reponse').innerHTML = responsejson.cle2;
+                document.getElementById('reponse').innerHTML = localStorage.getItem("Nom_Users") + " " + responsejson.cle2;
                 connection.innerHTML = responsejson.cle1;
             });
 }
@@ -30,6 +30,7 @@ connection.addEventListener('click', () => {
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem("IdUsers", data.user.Id);
+                localStorage.setItem("Nom_Users", data.user.Login);
                 location.reload();
             });
     }
