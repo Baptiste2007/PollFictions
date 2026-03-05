@@ -45,7 +45,7 @@
     flex: 1 1 auto;
     padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
     color: var(--bs-card-color);
-    max-height: 375px;
+    max-height: 430px;
     text-align: justify;
     overflow: hidden;
     text-overflow: ellipsis;
