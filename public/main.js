@@ -78,9 +78,9 @@ fetch('/Votes')
         const oeuvres = document.getElementsByClassName("B_image_car");
         let max_oeuvre = oeuvres.length;
 
-        // Initialisation correcte des tableaux
+        // Initialisation des tableaux
         let sauve_note = Array(max_oeuvre).fill(0);
-        let nbtvote = Array(max_oeuvre).fill(0);
+        let nbtvote = Array(max_oeuvre).fill(0);;
 
         // Comparer les id des oeuvres avec les id vote (bdd)
         for (let i = 0; i < max_votes; i++) {
@@ -127,7 +127,6 @@ fetch('/Votes')
 
             container.appendChild(bloc);
         }
-
     });
 
 
@@ -243,6 +242,7 @@ for (let i = 0; i < contenue_oeuvre.length; i++) {
                         } else {
                             alert('Connectez-vous pour pouvoir voter');
                         }
+                        location.reload();
                     });
 
                     const boutonVoirVote = document.createElement("button");
