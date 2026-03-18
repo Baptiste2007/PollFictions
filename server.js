@@ -2,6 +2,7 @@ import 'dotenv/config';
 import mysql from 'mysql2';
 import express from 'express';
 import ip from 'ip';
+import jwt from "jsonwebtoken";
 
 const app = express();
 const port = 3005;
@@ -29,22 +30,44 @@ app.use(express.json());
 // Permet de se connectés 
 app.post('/connexion', (req, res) => {
   console.log(req.body);
-  //on récupère le login et le password
+
   const { login, password } = req.body;
-  connection.query('SELECT * FROM Users WHERE login = ? AND password = ?', [login, password], (err, results) => {
-    if (err) {
-      console.error('Erreur lors de la vérification des identifiants :', err);
-      res.status(500).json({ message: 'Erreur serveur' });
-      return;
+
+  connection.query(
+    'SELECT * FROM Users WHERE login = ? AND password = ?',
+    [login, password],
+    (err, results) => {
+
+      if (err) {
+        console.error('Erreur lors de la vérification des identifiants :', err);
+        return res.status(500).json({ message: 'Erreur serveur' });
+      }
+
+      if (results.length === 0) {
+        return res.status(401).json({ message: 'Identifiants invalides' });
+      }
+
+      const user = results[0];
+/*
+      // Génération du token
+      const token = jwt.sign(
+        { id: user.id, login: user.login },
+        "MA_CLE_SECRETE",
+        { expiresIn: "2h" }
+      );*/
+
+      // Réponse finale (unique)
+      return res.json({
+        message: "Connexion réussie",
+        //token,
+        user: {
+          id: user.id,
+          login: user.login,
+          role: user.role
+        }
+      });
     }
-    if (results.length === 0) {
-      res.status(401).json({ message: 'Identifiants invalides' });
-      return;
-    }
-    // Identifiants valides 
-    //renvoi les informations du user
-    res.json({ message: 'Connexion réussie !', user: results[0] });
-  });
+  );
 });
 
 app.get('/info', (req, res) => {

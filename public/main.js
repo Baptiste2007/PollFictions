@@ -30,7 +30,7 @@ connection.addEventListener('click', () => {
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem("IdUsers", data.user.Id);
-                localStorage.setItem("Nom_Users", data.user.Login);
+                localStorage.setItem("Nom_Users", data.user.login);
                 location.reload();
             });
     }
