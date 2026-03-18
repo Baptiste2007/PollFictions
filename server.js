@@ -1,41 +1,18 @@
-const express = require('express');
+import 'dotenv/config';
+import mysql from 'mysql2';
+import express from 'express';
+import ip from 'ip';
+
 const app = express();
-const port = 3005; // Le port sur lequel votre serveur écoutera
-const mysql = require('mysql2');
+const port = 3005;
 
-
-// Pour ce connectés à la base :
-/*
 const connection = mysql.createConnection({
-  host: '172.29.18.113',
-  user: 'Poll Fictions',
-  password: 'Poll Fictions',
-  database: 'Poll Fictions'
-});*/
-
-//MORELLE Geoffrey (La Providence):
-const connection = mysql.createConnection({
-  host: '172.29.20.238',
-  user: 'accessNodeServerDemo',
-  password: 'accessNodeServerDemo',
-  database: 'Poll Fictions'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
 });
 
-//MORELLE Geoffrey (Maison):
-/*const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'Poll Fictions'
-});*/
-
-// pour ce connectés a la maison (Baptiste)
-//const connection = mysql.createConnection({
-//host: '192.168.1.45',
-//user: 'Poll Fictions',
-//password: 'Poll Fictions',
-//database: 'Poll Fictions'
-//});
 connection.connect((err) => {
   if (err) {
     console.error('Erreur de connexion à la base de données :', err);
@@ -46,6 +23,7 @@ connection.connect((err) => {
 
 app.use(express.static('public'));
 app.use(express.json());
+
 
 
 // Permet de se connectés 
@@ -85,7 +63,6 @@ app.get('/Users', (req, res) => {
   });
 });
 
-
 // Insérer de nouveux Users dans la base 
 app.post('/register', (req, res) => {
 
@@ -107,7 +84,7 @@ app.post('/register', (req, res) => {
 
 // Pour voter :
 app.post('/Votes', (req, res) => {
-  
+
   connection.query(
     'INSERT INTO Votes (Note, Avis, IdUsers, IdOeuvres, Date) VALUES (?, ?, ?, ?, NOW())',
     [req.body.Note, req.body.Avis, req.body.IdUsers, req.body.IdOeuvres],
@@ -147,11 +124,8 @@ app.get('/Oeuvres', (req, res) => {
   });
 });
 
-
-
-
 // Démarrer le serveur
 app.listen(port, () => {
-  let Ip = require("ip").address();
+  let Ip = ip.address();
   console.log(`Le serveur est en http://${Ip}:${port}`);
 })
